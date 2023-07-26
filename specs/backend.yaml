@@ -1,0 +1,363 @@
+openapi: "3.0.3"
+info:
+  title: "holiday API"
+  description: "holiday API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /client:
+    post:
+      tags:
+        - Client
+      summary: registration of a new client
+      description: registration of a new client
+      operationId: createClient
+      requestBody:
+        description: a new client need to be add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientDTO"
+      responses:
+        201:
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDTO"
+        409:
+          description: Email address already exist
+    get:
+      tags:
+        - Client
+      summary: fetch of all clients
+      description: fetch of all client
+      operationId: getAllClient
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClientDTO"
+  /client/{id}:
+    get:
+      tags:
+        - Client
+      summary: get client by id
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDTO"
+        404:
+          description: Client not found
+    put:
+      tags:
+        - Client
+      summary: update client by id
+      description: Update client by their id
+      operationId: updateClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientDTO"
+        required: true
+      responses:
+        200:
+          description: Client updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDTO"
+        409:
+          description: Email address already exist
+        404:
+          description: Client not found
+    delete:
+      tags:
+        - Client
+      summary: delete client by id
+      description: Delete client by their id
+      operationId: deleteClientById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        204:
+          description: Client deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDTO"
+        404:
+          description: Client not found
+    patch:
+      tags:
+        - Client
+      summary: PATCH client/{id}
+      operationId: patchaClient
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "string"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientDTO"
+        404:
+          description: Client not found
+  /login:
+    post:
+      tags:
+        - Client
+      summary: Connect a client
+      operationId: loginaClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientDTO"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          description: NOT FOUND
+
+  /conge:
+    get:
+      tags:
+        - Conge
+      summary: Get all holidays
+      description: fetch of holidays
+      operationId: getHolidays
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CongeDTO"
+
+  /conge/{id}:
+    get:
+      tags:
+        - Conge
+      summary: Get holiday by {congeId}
+      description: Get holiday by their id
+      operationId: fetchHolidayById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CongeDTO"
+        404:
+          description: Holiday not found
+    put:
+      tags:
+        - Conge
+      summary: Update holiday by {congeId}
+      description: Update holiday by their id
+      operationId: updateHoliday
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CongeDTO"
+        required: true
+      responses:
+        200:
+          description: Holiday updated successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          description: Holiday not found
+    delete:
+      tags:
+        - Conge
+      summary: Delete holiday by {conge_id}
+      description: Delete holiday by their id
+      operationId: deleteHoliday
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        201:
+          description: NO CONTENT
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CongeDTO"
+        404:
+          description: Holiday not found
+    patch:
+      tags:
+        - Conge
+      summary: Update holiday by {congeId}
+      operationId: patchHoliday
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "string"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CongeDTO"
+        "404":
+          description: "Holiday not found"
+  /client/{id}/conge:
+    post:
+      tags:
+        - Conge
+      summary: create a holiday
+      description: create a holiday
+      operationId: createHoliday
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CongeDTO"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+components:
+  schemas:
+    CongeDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        type:
+          type: string
+          enum:
+            - "ANNUEL"
+            - "MALADIE"
+            - "MATERNITE"
+            - "PATERNITE"
+            - "FORMATION"
+            - "AUTRE"
+        dateDebut:
+          type: string
+          format: date
+        dateFin:
+          type: string
+          format: date
+        nbrJour:
+          type: integer
+          format: int32
+        dateRetour:
+          type: string
+          format: date
+        description:
+          type: string
+        client:
+          $ref: "#/components/schemas/ClientDTO"
+
+    ClientDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        email:
+          type: string
+        password:
+          type: string
+        conges:
+          items:
+            $ref: "#/components/schemas/CongeDTO"
