@@ -23,12 +23,17 @@ const router = createRouter({
           path: '/holiday-list',
           name: 'holiday list',
           component: () => import('../views/HolidayList.vue')
-          
+
         },
         {
           path: '/holiday-details',
           name: 'holiday details',
           component: () => import('../views/HolidayDetails.vue')
+        },
+        {
+          path: '/no-holiday',
+          name: 'no holiday create',
+          component: () => import('../views/NoHoliday.vue')
         },
         {
           path: '/admin',
