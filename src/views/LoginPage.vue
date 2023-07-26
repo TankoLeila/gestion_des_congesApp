@@ -6,14 +6,13 @@
         <span class="text-3xl font-bold p-10 text-center"></span>
       </div>
     </section>
-
     <section
       class="flex flex-col gap-y-10 md:gap-y-2 lg:gap-y-2 md:items-center lg:items-center shadow-lg border h-[700px] md:h-[400px] lg:h-[400px] px-5 md:bg-white lg:bg-white md:w-[400px] md:p-5 lg:w-[400px] lg:p-5 md:flex md:rounded-2xl">
       <div class="flex flex-col gap-y-2 p-5">
         <span class="text-2xl font-bold">Login</span>
         <span class="">Welcome and Identify you here!!</span>
       </div>
-      <div class="flex flex-col gap-y-5 md:gap-y-2 border">
+      <div class="flex flex-col gap-y-5 md:gap-y-2">
         <div class="flex flex-col">
           <div class="flex flex-col relative">
             <label class="font-bold">Email</label>
@@ -39,3 +38,16 @@
     </section>
   </section>
 </template>
+
+<script>
+import IconWrapper from "@/components/icons/IconWrapper.vue"
+import IconBlock from "@/components/icons/IconBlock.vue"
+
+export default {
+  name: "LoginPage",
+  components: {
+    IconWrapper,
+    IconBlock
+  }
+}
+</script>
