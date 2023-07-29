@@ -1,53 +1,95 @@
 <template>
-  <section class=" md:flex lg:flex min-h-screen items-center justify-center">
+  <section class="md:flex lg:flex min-h-screen items-center justify-center">
     <section class="bg-white md:hidden lg:hidden">
       <div class="flex justify-center">
-        <img src="/Illustrations/HolidayTracker.png" alt="" class="h-[100px]">
+        <img src="../assets/HolidayTracker.png" alt="" class="h-[100px]" />
         <span class="text-3xl font-bold p-10 text-center"></span>
       </div>
     </section>
     <section
-      class="flex flex-col gap-y-10 md:gap-y-2 lg:gap-y-2 md:items-center lg:items-center shadow-lg border h-[700px] md:h-[400px] lg:h-[400px] px-5 md:bg-white lg:bg-white md:w-[400px] md:p-5 lg:w-[400px] lg:p-5 md:flex md:rounded-2xl">
+      class="flex flex-col gap-y-10 md:gap-y-2 lg:gap-y-2 md:items-center lg:items-center shadow-lg border h-[700px] md:h-[400px] lg:h-[400px] px-5 md:bg-white lg:bg-white md:w-[400px] md:p-5 lg:w-[400px] lg:p-5 md:flex md:rounded-2xl"
+    >
       <div class="flex flex-col gap-y-2 p-5">
         <span class="text-2xl font-bold">Login</span>
         <span class="">Welcome and Identify you here!!</span>
       </div>
-      <div class="flex flex-col gap-y-5 md:gap-y-2">
-        <div class="flex flex-col">
-          <div class="flex flex-col relative">
-            <label class="font-bold">Email</label>
-            <input type="email" placeholder="Enter your email"
-              class="p-3 md:p-2 lg:p-2 md:w-[350px] w-[370px] shadow-lg bg-gray-50 md:bg-white lg:bg-white border-2 rounded-md pl-10 md:pl-10 lg:pl-10">
-            <IconWrapper class="absolute left-3 bottom-3" />
-          </div>
-
+      <div class="space-y-12">
+        <div class="bg-red-700 text-white p-4 rounded-lg" v-if="errorMessage">
+          {{ errorMessage }}
         </div>
-        <div class="flex flex-col">
-          <div class="flex flex-col relative">
-            <label class="font-bold">Password</label>
-            <input type="email" placeholder="Enter your Password"
-              class="p-3 md:p-2 lg:p-2 bg-gray-50  md:bg-white lg:bg-white md:w-[350px] lg:w-[350px] w-[370px] border-2 rounded-md shadow-lg pl-10 md:pl-10 lg:pl-10">
-            <IconBlock class="absolute left-3 bottom-3" />
-          </div>
+        <FormInput
+          :errors="v$.email.$errors"
+          v-model="email"
+          label="Email"
+          placeholder="Enter your email"
+          type="email"
+        />
+        <FormInput
+          v-model="password"
+          type="password"
+          placeholder="Enter your Password"
+          label="Password"
+          :errors="v$.password.$errors"
+        />
+        <div class="border-blue-200">
+          <button
+            @click="loginToApp"
+            class="bg-blue-400 text-white font-bold rounded-md border-2 py-3 px-2 w-full shadow-lg shadow-blue-400"
+          >
+            LOGIN
+          </button>
         </div>
-      </div>
-      <div class="border-blue-200 m-5">
-        <button
-          class="bg-blue-400 text-white font-bold rounded-md border-2 p-2 w-[350px] md:w-[300px] lg:w-[300px] shadow-lg shadow-blue-400">LOGIN</button>
       </div>
     </section>
   </section>
 </template>
 
 <script>
-import IconWrapper from "@/components/icons/IconWrapper.vue"
-import IconBlock from "@/components/icons/IconBlock.vue"
+import FormInput from '../components/FormInput.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, helpers } from '@vuelidate/validators'
+import { useHolidayStore } from '@/stores/holiday'
 
 export default {
-  name: "LoginPage",
+  name: 'LoginPage',
   components: {
-    IconWrapper,
-    IconBlock
+    FormInput
+  },
+  setup() {
+    return { v$: useVuelidate(), store: useHolidayStore() }
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      vuelidateExternalResults: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  validations() {
+    return {
+      email: { required: helpers.withMessage('This field cannot be empty', required) },
+      password: { required: helpers.withMessage('This field cannot be empty', required) }
+    }
+  },
+  methods: {
+    validate() {
+      Object.assign(this.vuelidateExternalResults, this.store.error)
+    },
+    async loginToApp() {
+      console.log(this.email, this.password)
+      const isFormValid = await this.v$.$validate()
+      if (isFormValid) {
+        this.$router.push('/welcome')
+      }
+    }
+  },
+  computed: {
+    errorMessage() {
+      return this.v$.$errors.map((error) => error.$message)[0]
+    }
   }
 }
 </script>
