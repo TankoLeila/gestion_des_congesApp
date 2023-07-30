@@ -19,11 +19,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
           </svg>
         </div>
-        <div class="text-blue-500 bg-indigo-200 rounded-lg p-2 text-center font-medium text-xs">
+        <div class="text-indigo-800 bg-indigo-200 rounded-lg p-2 text-center font-medium text-xs">
           Employees
         </div>
       </section>
-      <section class="h-screen">
+      <section class="h-screen w-full">
         <router-view></router-view>
       </section>
     </section>

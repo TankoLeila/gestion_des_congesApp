@@ -1,9 +1,12 @@
 <template>
-  <section class="h-screen " v-if="!employees.length">
-    <div class="flex flex-col gap-y-4">
-      <span class="text-sm font-bold">No employee available until now</span>
+  <section class="p-10 flex justify-center items-center" v-if="!employees.length">
+    <div class="flex flex-col items-center justify-center gap-y-7 font-bold text-sm">
+      <div class="flex items-center justify-center flex-col">
+        <IconDiscover />
+        <span>No employee available until now</span>
+      </div>
       <div @click="toggleEmployeeCreationFormDisplay"
-        class="flex items-center gap-x-2 justify-end text-indigo-500 font-bold text-sm">
+        class="flex items-center justify-center gap-x-2 text-indigo-500 cursor-pointer">
         <span>Add new employee</span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-6 h-6">
@@ -47,12 +50,11 @@
       </div>
     </section>
   </section>
-  <section v-if="shouldDisplayEmployeeCreationForm"
-    class="absolute inset-0 w-full h-full opacity-90 bg-gray-800">
+  <section v-if="shouldDisplayEmployeeCreationForm" class="absolute inset-0 w-full h-full opacity-90 bg-gray-800">
     <section class="relative flex justify-center items-center">
-      <CreateEmployee
-      class="min-w-[400px] z-40 absolute -translate-x-1/2 translate-y-1/2 left-1/2 top-1/2" 
-      @fetchEmployeesList="[toggleEmployeeCreationFormDisplay, getAllEmployees]" />
+      <CreateEmployee @cancel="toggleEmployeeCreationFormDisplay"
+        class="min-w-[400px] z-40 absolute -translate-x-1/2 translate-y-1/2 left-1/2 top-1/2"
+        @fetchEmployeesList="[toggleEmployeeCreationFormDisplay, getAllEmployees]" />
     </section>
   </section>
 </template>
@@ -60,6 +62,7 @@
 <script>
 import IconBellActivated from "@/components/icons/IconBellActivated.vue"
 import IconBellInactivated from "@/components/icons/IconBellInactivated.vue"
+import IconDiscover from "@/components/icons/IconDiscover.vue"
 import { useHolidayStore } from "@/stores/holiday"
 import CreateEmployee from "@/components/CreateEmployee.vue";
 
@@ -68,7 +71,8 @@ export default {
   components: {
     IconBellActivated,
     IconBellInactivated,
-    CreateEmployee
+    CreateEmployee,
+    IconDiscover
   },
   setup: () => ({
     store: useHolidayStore()
@@ -92,6 +96,9 @@ export default {
     toggleEmployeeCreationFormDisplay() {
       this.shouldDisplayEmployeeCreationForm = !this.shouldDisplayEmployeeCreationForm
     }
+  },
+  async beforeMount() {
+    await this.getAllEmployees()
   }
 }
 </script>

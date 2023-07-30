@@ -26,14 +26,12 @@
 <script>
 import HolidayCard from "@/components/HolidayCard.vue"
 import HolidayCardValidation from "@/components/HolidayCardValidation.vue"
-import IconBulleInfo from "@/components/icons/IconBulleInfo.vue"
 
 export default {
   name: "AdminEmployeeDetails",
   components: {
     HolidayCard,
     HolidayCardValidation,
-    IconBulleInfo
   },
   data() {
     return {

@@ -67,7 +67,6 @@ export default {
       const isFormValid = await this.v$.$validate()
       if (isFormValid) {
         await this.store.createEmployee({
-          status: "member-without-rules",
           email: this.email,
           password: this.password
         })

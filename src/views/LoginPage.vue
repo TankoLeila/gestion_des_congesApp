@@ -7,8 +7,7 @@
       </div>
     </section>
     <section
-      class="flex flex-col gap-y-10 md:gap-y-2 lg:gap-y-2 md:items-center lg:items-center shadow-lg border h-[700px] md:h-[400px] lg:h-[400px] px-5 md:bg-white lg:bg-white md:w-[400px] md:p-5 lg:w-[400px] lg:p-5 md:flex md:rounded-2xl"
-    >
+      class="flex flex-col gap-y-10 md:gap-y-2 lg:gap-y-2 md:items-center lg:items-center shadow-lg border h-[700px] md:h-[400px] lg:h-[400px] px-5 md:bg-white lg:bg-white md:w-[400px] md:p-5 lg:w-[400px] lg:p-5 md:flex md:rounded-2xl">
       <div class="flex flex-col gap-y-2 p-5">
         <span class="text-2xl font-bold">Login</span>
         <span class="">Welcome and Identify you here!!</span>
@@ -17,25 +16,12 @@
         <div class="bg-red-700 text-white p-4 rounded-lg" v-if="errorMessage">
           {{ errorMessage }}
         </div>
-        <FormInput
-          :errors="v$.email.$errors"
-          v-model="email"
-          label="Email"
-          placeholder="Enter your email"
-          type="email"
-        />
-        <FormInput
-          v-model="password"
-          type="password"
-          placeholder="Enter your Password"
-          label="Password"
-          :errors="v$.password.$errors"
-        />
+        <FormInput :errors="v$.email.$errors" v-model="email" label="Email" placeholder="Enter your email" type="email" />
+        <FormInput v-model="password" type="password" placeholder="Enter your Password" label="Password"
+          :errors="v$.password.$errors" />
         <div class="border-blue-200">
-          <button
-            @click="loginToApp"
-            class="bg-blue-400 text-white font-bold rounded-md border-2 py-3 px-2 w-full shadow-lg shadow-blue-400"
-          >
+          <button @click="loginToApp"
+            class="bg-blue-400 text-white font-bold rounded-md border-2 py-3 px-2 w-full shadow-lg shadow-blue-400">
             LOGIN
           </button>
         </div>
@@ -56,9 +42,9 @@ export default {
     FormInput
   },
   setup() {
-    return { 
-      v$: useVuelidate(), 
-      store: useHolidayStore() 
+    return {
+      v$: useVuelidate(),
+      store: useHolidayStore()
     }
   },
   data() {
@@ -82,10 +68,19 @@ export default {
       Object.assign(this.vuelidateExternalResults, this.store.error)
     },
     async loginToApp() {
-      console.log(this.email, this.password)
       const isFormValid = await this.v$.$validate()
       if (isFormValid) {
-        this.$router.push('/welcome')
+        const id = await this.store.loginEmployee({
+          email: this.email,
+          password: this.password
+        })
+        if (id) {
+          if(this.store.user.email === "LeilaTanko@gmail.com") {
+            this.$router.push("/admin/employees")
+            return;
+          }
+          this.$router.push('/welcome')
+        }
       }
     }
   },

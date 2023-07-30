@@ -24,13 +24,8 @@
 </template>
 
 <script>
-import IconBulleInfo from "@/components/icons/IconBulleInfo.vue"
-
 export default {
   name: 'HolidayCard',
-  components: {
-    IconBulleInfo
-  },
   props: {
     holiday: Object
   }
