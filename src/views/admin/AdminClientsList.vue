@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!employees.length">
+  <section class="h-screen " v-if="!employees.length">
     <div class="flex flex-col gap-y-4">
       <span class="text-sm font-bold">No employee available until now</span>
       <div @click="toggleEmployeeCreationFormDisplay"
@@ -48,8 +48,12 @@
     </section>
   </section>
   <section v-if="shouldDisplayEmployeeCreationForm"
-    class="flex justify-center items-center absolute inset-0 w-full h-full bg-gray-600 opacity-30">
-    <CreateEmployee @fetchEmployeesList="[toggleEmployeeCreationFormDisplay, getAllEmployees]" />
+    class="absolute inset-0 w-full h-full opacity-90 bg-gray-800">
+    <section class="relative flex justify-center items-center">
+      <CreateEmployee
+      class="min-w-[400px] z-40 absolute -translate-x-1/2 translate-y-1/2 left-1/2 top-1/2" 
+      @fetchEmployeesList="[toggleEmployeeCreationFormDisplay, getAllEmployees]" />
+    </section>
   </section>
 </template>
 
@@ -69,11 +73,13 @@ export default {
   setup: () => ({
     store: useHolidayStore()
   }),
-  data: () => ({
-    employees: [],
-    isLoading: false,
-    shouldDisplayEmployeeCreationForm: false,
-  }),
+  data() {
+    return {
+      employees: [],
+      isLoading: false,
+      shouldDisplayEmployeeCreationForm: false,
+    }
+  },
   methods: {
     async getAllEmployees() {
       this.isLoading = true;

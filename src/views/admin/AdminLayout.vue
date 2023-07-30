@@ -1,18 +1,18 @@
 <template>
   <section class="h-screen flex flex-col relative">
-    <section class="px-2 py-4 flex justify-between items-center">
+    <section class="p-4 flex justify-between items-center shadow-sm">
       <div>LOGO</div>
-      <div class="px-2 border-l border-pink-600 flex flex-col items-start gap-y-2">
-        <span class="text-pink-500 font-thin text-sm">Leila Tanko</span>
-        <span class="text-pink-800 font-bold text-xs">
-          <span class="w-2 h-2 bg-pink-800 rounded-full block"></span>
+      <div class="px-4 border-l border-indigo-600 flex flex-col items-start gap-y-2">
+        <span class="text-indigo-800 font-semi-bold text-sm">Leila Tanko</span>
+        <span class="text-indigo-800 font-bold text-xs flex items-center gap-x-2 bg-indigo-200 rounded-md px-2 py-1">
+          <span class="w-2 h-2 bg-indigo-800 rounded-full block"></span>
           Admin
         </span>
       </div>
     </section>
     <section class="flex divide-x-2">
-      <section>
-        <div class="flex gap-x-2">
+      <section class="w-1/4 max-w-[120px] p-4 space-y-7">
+        <div class="flex gap-x-4 items-center">
           <span class="text-gray-900 font-extrabold text-lg">MENU</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-3 h-3">

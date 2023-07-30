@@ -1,21 +1,23 @@
 <template>
   <section class="bg-white flex flex-col divide-y-2 rounded-lg">
-    <section class="p-4">
+    <section class="p-4 pb-2 flex flex-col gap-y-1">
       <span class="text-xl font-medium text-gray-900">Add Employee</span>
       <span class="text-xs text-gray-700 font-bold">add new user in the system</span>
     </section>
-    <section class="p-4">
-      <span 
-        class="text-red-500 font-bold text-sm"
-         v-if="errorMessage">
-         {{ errorMessage }}
+    <section class="p-4 space-y-2">
+      <span class="text-red-500 font-bold text-sm" v-if="errorMessage">
+        {{ errorMessage }}
       </span>
-      <FormInput v-model="email" />
-      <FormInput v-model="password" />
-      <div class="flex justify-end py-7">
-        <button 
-          @click="performEmployeeCreation" 
-          class="bg-blue-500 rounded-md p-2 text-white font-bold">
+      <div class="space-y-5">
+        <FormInput :errors="v$.email.$errors" v-model="email" label="Email" placeholder="Enter your email" type="email" />
+        <FormInput v-model="password" type="password" placeholder="Enter your Password" label="Password"
+          :errors="v$.password.$errors" />
+      </div>
+      <div class="flex justify-end py-7 gap-x-4">
+        <button @click="$emit('cancel')" class="bg-gray-400 rounded-md p-2 text-white font-bold w-[90px]">
+          Close
+        </button>
+        <button @click="performEmployeeCreation" class="bg-blue-500 rounded-md p-2 text-white font-bold w-[90px]">
           Save
         </button>
       </div>
@@ -34,7 +36,7 @@ export default {
   components: {
     FormInput
   },
-  emits: ["fetchEmployeesList"],
+  emits: ["fetchEmployeesList", 'cancel'],
   setup() {
     return {
       v$: useVuelidate(),
