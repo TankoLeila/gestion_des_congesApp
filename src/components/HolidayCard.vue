@@ -1,18 +1,36 @@
 <template>
-  <div class="bg-white rounded-xl p-5 shadow-lg shadow-blue-300 space-y-3">
-      <div class="flex justify-between">
-        <p class="text-gray-400">{{ holiday.createdAt }}</p>
-        <span class="text-gray-400">{{ holiday.time }}</span>
+  <section class="bg-white rounded-xl p-5 shadow-lg shadow-blue-300 space-y-3 relative">
+    <section class="flex justify-between text-gray-400">
+      <span>{{ holiday.createdAt }}</span>
+      <div class="flex items-center gap-x-4">
+        <span>{{ holiday.time }}</span>
+        <slot name="bulle-icon" />
       </div>
-      <h1 class="text-blue-500 text-xl font-bold ">{{ holiday.startingDate }} - {{ holiday.endingDate }}</h1>
-      <p class="text-xs">{{ holiday.description }}</p>
-      <p class="bg-blue-300 p-1 text-center text-blue-600 font-semibold w-[100px] rounded-2xl">{{ holiday.type }}</p>
+    </section>
+    <section class="text-blue-500 text-xl font-bold ">
+      {{ holiday.startingDate }} - {{ holiday.endingDate }}
+    </section>
+    <div class="text-xs text-ellipsis">{{ holiday.description }}</div>
+    <div class="flex gap-x-4 items-center">
+      <span class="bg-blue-300 p-1 text-center text-blue-600 font-semibold w-[100px] rounded-2xl">
+        {{ holiday.type }}
+      </span>
+      <span>{{ holiday.status }}</span>
     </div>
+    <section class="absolute top-0 right-0 z-10">
+      <slot class="bulle-card" />
+    </section>
+  </section>
 </template>
 
 <script>
+import IconBulleInfo from "@/components/icons/IconBulleInfo.vue"
+
 export default {
   name: 'HolidayCard',
+  components: {
+    IconBulleInfo
+  },
   props: {
     holiday: Object
   }

@@ -35,11 +35,23 @@ const router = createRouter({
           name: 'no holiday create',
           component: () => import('../views/NoHoliday.vue')
         },
+      ]
+    },
+    {
+      name: "admin-layout",
+      path: "/admin/employees",
+      component: () => import('../views/admin/AdminLayout.vue'),
+      children: [
         {
-          path: '/admin',
-          name: 'admin page',
-          component: () => import('../views/AdminPage.vue')
+          name: "employees-list",
+          path: "",
+          component: () => import("../views/admin/AdminClientsList.vue")
         },
+        {
+          name: "employee-details",
+          path: "/admin/employees/:id",
+          component: () => import("../views/admin/AdminClientDetails.vue")
+        }
       ]
     }
   ]

@@ -56,7 +56,10 @@ export default {
     FormInput
   },
   setup() {
-    return { v$: useVuelidate(), store: useHolidayStore() }
+    return { 
+      v$: useVuelidate(), 
+      store: useHolidayStore() 
+    }
   },
   data() {
     return {
