@@ -23,7 +23,7 @@
           Employees
         </div>
       </section>
-      <section>
+      <section class="h-screen">
         <router-view></router-view>
       </section>
     </section>
