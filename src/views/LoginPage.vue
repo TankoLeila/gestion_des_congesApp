@@ -64,9 +64,6 @@ export default {
     }
   },
   methods: {
-    validate() {
-      Object.assign(this.vuelidateExternalResults, this.store.error)
-    },
     async loginToApp() {
       const isFormValid = await this.v$.$validate()
       if (isFormValid) {
@@ -75,11 +72,14 @@ export default {
           password: this.password
         })
         if (id) {
-          if(this.store.user.email === "LeilaTanko@gmail.com") {
+          if (this.store.user.email === "LeilaTanko@gmail.com") {
             this.$router.push("/admin/employees")
             return;
           }
           this.$router.push('/welcome')
+        }
+        else {
+          Object.assign(this.vuelidateExternalResults, this.store.error)
         }
       }
     }

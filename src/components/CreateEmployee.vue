@@ -72,6 +72,9 @@ export default {
         })
         this.$emit("fetchEmployeesList")
       }
+      else {
+        Object.assign(this.vuelidateExternalResults, this.store.error)
+      }
     }
   },
   computed: {
