@@ -78,11 +78,25 @@ export default {
           }
           this.$router.push('/welcome')
         }
-        else {
-          Object.assign(this.vuelidateExternalResults, this.store.error)
-        }
+
+        Object.assign(this.vuelidateExternalResults, this.store.error)
+
       }
     }
+  },
+  watch: {
+    email(newEmail) {
+      if(newEmail && this.store.error.email) {
+        Object.assign(this.store.error, {email: "", password: ""})
+        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      }
+    },
+    password(newPassword) {
+      if(newPassword && this.store.error.password) {
+        Object.assign(this.store.error, {email: "", password: ""})
+        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      }
+    },
   },
   computed: {
     errorMessage() {

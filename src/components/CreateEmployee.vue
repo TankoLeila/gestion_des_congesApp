@@ -60,9 +60,6 @@ export default {
     }
   },
   methods: {
-    validate() {
-      Object.assign(this.vuelidateExternalResults, this.store.error)
-    },
     async performEmployeeCreation() {
       const isFormValid = await this.v$.$validate()
       if (isFormValid) {
@@ -70,12 +67,27 @@ export default {
           email: this.email,
           password: this.password
         })
+        if (this.store.error.email) {
+          Object.assign(this.vuelidateExternalResults, this.store.error)
+          return;
+        }
         this.$emit("fetchEmployeesList")
       }
-      else {
-        Object.assign(this.vuelidateExternalResults, this.store.error)
-      }
     }
+  },
+  watch: {
+    email(newEmail) {
+      if(newEmail && this.store.error.email) {
+        Object.assign(this.store.error, {email: "", password: ""})
+        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      }
+    },
+    password(newPassword) {
+      if(newPassword && this.store.error.password) {
+        Object.assign(this.store.error, {email: "", password: ""})
+        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      }
+    },
   },
   computed: {
     errorMessage() {
