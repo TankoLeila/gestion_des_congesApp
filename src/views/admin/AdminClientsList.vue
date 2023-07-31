@@ -17,7 +17,7 @@
   </section>
   <section v-else class="space-y-4 p-5">
     <div @click="toggleEmployeeCreationFormDisplay"
-      class="cursor-pointer px-10 flex items-center gap-x-2 justify-end text-indigo-500 font-bold text-sm">
+      class="cursor-pointer px-10 flex items-center gap-x-2 justify-end text-indigo-500 hover:bg-indigo-100 font-bold text-sm">
       <span>New employee</span>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-6 h-6">

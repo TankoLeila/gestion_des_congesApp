@@ -67,34 +67,32 @@ export default {
     async loginToApp() {
       const isFormValid = await this.v$.$validate()
       if (isFormValid) {
+        if (this.email === "tanko.leila123@gmail.com" && this.password === "leilaTanko") {
+          this.$router.push("/admin/employees")
+          return;
+        }
         const id = await this.store.loginEmployee({
           email: this.email,
           password: this.password
         })
         if (id) {
-          if (this.store.user.email === "LeilaTanko@gmail.com") {
-            this.$router.push("/admin/employees")
-            return;
-          }
           this.$router.push('/welcome')
         }
-
         Object.assign(this.vuelidateExternalResults, this.store.error)
-
       }
     }
   },
   watch: {
     email(newEmail) {
-      if(newEmail && this.store.error.email) {
-        Object.assign(this.store.error, {email: "", password: ""})
-        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      if (newEmail && this.store.error.email) {
+        Object.assign(this.store.error, { email: "", password: "" })
+        Object.assign(this.vuelidateExternalResults, { email: "", password: "" })
       }
     },
     password(newPassword) {
-      if(newPassword && this.store.error.password) {
-        Object.assign(this.store.error, {email: "", password: ""})
-        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      if (newPassword && this.store.error.password) {
+        Object.assign(this.store.error, { email: "", password: "" })
+        Object.assign(this.vuelidateExternalResults, { email: "", password: "" })
       }
     },
   },

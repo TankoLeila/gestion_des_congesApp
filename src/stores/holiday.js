@@ -11,7 +11,9 @@ export const useHolidayStore = defineStore('holiday', {
       user: {
         id: "",
         email: "",
-      }
+        password: ""
+      },
+      holidays: []
     }
   },
   actions: {
@@ -26,7 +28,8 @@ export const useHolidayStore = defineStore('holiday', {
         }) 
         Object.assign(this.user, {
           id,
-          email: client.email
+          email: client.email,
+          password: client.password
         })
       } catch (error) {
         this.setError(error)
@@ -55,6 +58,40 @@ export const useHolidayStore = defineStore('holiday', {
         this.setError(error)
       }
       return clients;
+    },
+    async getHolidayById(holidayId) {
+      let holiday = {};
+      try {
+        holiday = await CongeService.fetchHolidayById({id: holidayId});
+      } catch (error) {
+        this.setError(error)
+      }
+      return holiday;
+    },
+    async getAllHolidays() {
+      try {
+        this.holidays = await CongeService.getHolidays()
+      }
+      catch(error) {
+        this.setError(error)
+      }
+    },
+    async createHoliday(clientId, holiday) {
+      try {
+        await CongeService.createHoliday({
+          id: clientId,
+          requestBody: {
+            dateDebut: holiday.startingDate,
+            dateFin: holiday.endingDate,
+            dateRetour: holiday.recomingDate,
+            description: holiday.description,
+            type: holiday.type,
+            nbrJour: holiday.numberOfDate,
+          }
+        })        
+      } catch (error) {
+        this.setError(error)
+      }
     },
     setError(error) {
       this.error.email = error.message
