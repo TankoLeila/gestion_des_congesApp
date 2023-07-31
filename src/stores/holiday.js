@@ -96,6 +96,6 @@ export const useHolidayStore = defineStore('holiday', {
     setError(error) {
       this.error.email = error.message
       this.error.password = error.message
-    }
+    },
   }
 })
