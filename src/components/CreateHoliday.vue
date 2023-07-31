@@ -59,7 +59,7 @@
               id="date"
               type="date"
               placeholder="YYYY-MM-DD"
-              v-model="holiday.startingDate"
+              v-model="holiday.dateDebut"
             />
           </div>
 
@@ -70,7 +70,7 @@
               id="date"
               type="date"
               placeholder="YYYY-MM-DD"
-              v-model="holiday.endingDate"
+              v-model="holiday.dateFin"
             />
           </div>
         </div>
@@ -82,7 +82,7 @@
               type="number"
               placeholder="days?"
               class="p-2 border border-gray-400 rounded-lg md:w-[270px] bg-gray-200"
-              v-model="holiday.numberOfDays"
+              v-model="holiday.nbrJour"
             />
           </div>
 
@@ -93,7 +93,7 @@
               id="date"
               type="date"
               placeholder="YYYY-MM-DD"
-              v-model="holiday.returnDate"
+              v-model="holiday.dateRetour"
             />
           </div>
         </div>
@@ -134,13 +134,14 @@ export default {
       types: ['ANNUEL', 'MALADIE', 'MATERNITE', 'PATERNITE', 'FORMATION', 'AUTRE'],
       holiday: {
         type: '',
-        startingDate: '',
-        endingDate: '',
-        numberOfDays: 0,
-        returnDate: '',
+        dateDebut: '',
+        dateFin: '',
+        nbrJour: 0,
+        dateRetour: '',
         description: {
           description: '',
-          status: 'PENDING'
+          status: 'PENDING',
+          createdAt: new Date().toISOString()
         }
       }
     }
@@ -148,6 +149,7 @@ export default {
   methods: {
     async createHoliday() {
       await this.store.createHoliday(this.holiday)
+      await this.store.getAllHolidays()
       this.store.show = false
       this.$router.push('/holiday-list')
     }

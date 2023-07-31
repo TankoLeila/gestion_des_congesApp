@@ -17,7 +17,7 @@
     </section>
     <section class="m-10 lg:m-20 space-y-5">
       <div class="">
-        <h1 class="text-xl font-bold text-center md:text-left lg:text-left">{{ holiday.startingDate }} - {{ holiday.endingDate }}</h1>
+        <h1 class="text-xl font-bold text-center md:text-left lg:text-left">{{ holiday.dateDebut }} - {{ holiday.dateRetour }}</h1>
         <p class="text-gray-400 hidden md:block lg:block">Il vous reste {{ remainingDays }} jours(s)</p>
       </div>
 
@@ -31,7 +31,7 @@
           <div class="flex justify-between items-center lg:w-[50%]">
             <div class="flex flex-col">
               <span class="text-gray-400 text-xs">Starts</span>
-              <span class="font-semibold">{{ holiday.startingDate }}</span>
+              <span class="font-semibold">{{ holiday.dateDebut }}</span>
             </div>
 
             <div>
@@ -43,13 +43,13 @@
 
           <div class="flex flex-col">
             <span class="text-gray-400 text-xs">Return</span>
-            <span class="font-semibold">{{ holiday.returningDate }}</span>
+            <span class="font-semibold">{{ holiday.dateRetour }}</span>
           </div>
 
           <div class="flex justify-between items-center lg:w-[50%]">
             <div class="flex flex-col">
               <span class="text-gray-400 text-xs">Ends</span>
-              <span class="font-semibold">{{ holiday.endingDate }}</span>
+              <span class="font-semibold">{{ holiday.dateFin }}</span>
             </div>
 
             <div>
@@ -62,7 +62,7 @@
 
         <div>
           <span class="text-gray-400 text-xs">Description</span>
-          <p>{{ holiday.description }}</p>
+          <p>{{ holiday.description.description }}</p>
         </div>
 
       </div>
@@ -86,21 +86,11 @@ export default {
     IconCalendarDetails2
   },
   data: () => ({
-    holiday:
-    {
-      id: "",
-      createdAt: "",
-      time: "",
-      startingDate: "",
-      endingDate: "",
-      returningDate: "",
-      description: "",
-      type: "",
-    }
+    holiday: {}
   }),
   computed: {
     remainingDays() {
-      return this.getDays(new Date(this.holiday.endingDate).getTime() - new Date(this.holiday.startingDate).getTime())
+      return this.getDays(new Date(this.holiday.dateFin).getTime() - new Date(this.holiday.dateDebut).getTime())
     }
   },
    methods:{

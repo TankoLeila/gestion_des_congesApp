@@ -79,12 +79,16 @@ export const useHolidayStore = defineStore('holiday', {
         await CongeService.createHoliday({
           id: this.user.id,
           requestBody: {
-            dateDebut: holiday.startingDate,
-            dateFin: holiday.endingDate,
-            dateRetour: holiday.returnDate,
+            dateDebut: holiday.dateDebut,
+            dateFin: holiday.dateFin,
+            dateRetour: holiday.dateRetour,
             description: JSON.stringify(holiday.description),
             type: holiday.type,
-            nbrJour: holiday.numberOfDays
+            nbrJour: holiday.nbrJour,
+            client: {
+              email: this.user.email,
+              id: this.user.id,
+            }
           }
         })
       } catch (error) {

@@ -9,15 +9,14 @@
         <IconHomeList />
         <p class="font-bold text-lg">Holiday History</p>
       </div>
-      <button
-        class="bg-blue-400 text-white font-semibold rounded-md border-2 p-2 w-[200px] hidden lg:block"
-      >
+      <button @click="store.show = true"
+        class="bg-blue-400 text-white font-semibold rounded-md border-2 p-2 w-[200px] hidden lg:block">
         Create holiday
       </button>
       <IconAddList />
     </section>
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:m-20 p-5">
-      <HolidayCard v-for="holiday in holidays" :key="holiday.id" :holiday="holiday" />
+      <HolidayCard v-for="holiday in store.holidays" :key="holiday.id" :holiday="holiday" />
     </section>
   </section>
 </template>
@@ -26,6 +25,8 @@
 import IconHomeList from '../components/icons/IconHomeList.vue'
 import IconAddList from '../components/icons/IconAddList.vue'
 import HolidayCard from '../components/HolidayCard.vue'
+import { useHolidayStore } from '../stores/holiday'
+
 export default {
   name: 'HolidayList',
   components: {
@@ -33,20 +34,12 @@ export default {
     IconAddList,
     HolidayCard
   },
-  data() {
-    return {
-      holidays: [
-        {
-          id: '',
-          createdAt: '',
-          time: '',
-          startingDate: '',
-          endingDate: '',
-          description: '',
-          type: ''
-        }
-      ]
-    }
+
+  setup() {
+    return { store: useHolidayStore() }
+  },
+  async beforeMount() {
+    await this.store.getAllHolidays()
   }
 }
 </script>
