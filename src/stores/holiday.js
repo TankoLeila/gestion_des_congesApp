@@ -9,23 +9,24 @@ export const useHolidayStore = defineStore('holiday', {
         password: ''
       },
       user: {
-        id: "",
-        email: "",
-        password: ""
+        id: '',
+        email: '',
+        password: ''
       },
-      holidays: []
+      holidays: [],
+      show: false
     }
   },
   actions: {
     async loginEmployee(client) {
-      let id = ""
+      let id = ''
       try {
         id = await ClientService.loginaClient({
           requestBody: {
             email: client.email,
-            password: client.password,
+            password: client.password
           }
-        }) 
+        })
         Object.assign(this.user, {
           id,
           email: client.email,
@@ -44,8 +45,7 @@ export const useHolidayStore = defineStore('holiday', {
             password: client.password
           }
         })
-      }
-      catch (error) {
+      } catch (error) {
         this.setError(error)
       }
     },
@@ -53,42 +53,40 @@ export const useHolidayStore = defineStore('holiday', {
       let clients = []
       try {
         clients = await ClientService.getAllClient()
-      }
-      catch (error) {
-        this.setError(error)
-      }
-      return clients;
-    },
-    async getHolidayById(holidayId) {
-      let holiday = {};
-      try {
-        holiday = await CongeService.fetchHolidayById({id: holidayId});
       } catch (error) {
         this.setError(error)
       }
-      return holiday;
+      return clients
+    },
+    async getHolidayById(holidayId) {
+      let holiday = {}
+      try {
+        holiday = await CongeService.fetchHolidayById({ id: holidayId })
+      } catch (error) {
+        this.setError(error)
+      }
+      return holiday
     },
     async getAllHolidays() {
       try {
         this.holidays = await CongeService.getHolidays()
-      }
-      catch(error) {
+      } catch (error) {
         this.setError(error)
       }
     },
-    async createHoliday(clientId, holiday) {
+    async createHoliday(holiday) {
       try {
         await CongeService.createHoliday({
-          id: clientId,
+          id: this.user.id,
           requestBody: {
             dateDebut: holiday.startingDate,
             dateFin: holiday.endingDate,
-            dateRetour: holiday.recomingDate,
-            description: holiday.description,
+            dateRetour: holiday.returnDate,
+            description: JSON.stringify(holiday.description),
             type: holiday.type,
-            nbrJour: holiday.numberOfDate,
+            nbrJour: holiday.numberOfDays
           }
-        })        
+        })
       } catch (error) {
         this.setError(error)
       }
@@ -96,6 +94,6 @@ export const useHolidayStore = defineStore('holiday', {
     setError(error) {
       this.error.email = error.message
       this.error.password = error.message
-    },
+    }
   }
 })
