@@ -20,13 +20,13 @@ const router = createRouter({
           component: () => import('../views/WelcomePage.vue')
         },
         {
-          path: '/holiday-list',
+          path: '/holidays/list',
           name: 'holiday list',
           component: () => import('../views/HolidayList.vue')
 
         },
         {
-          path: '/holiday-details',
+          path: '/holidays/holiday/details/:id',
           name: 'holiday details',
           component: () => import('../views/HolidayDetails.vue')
         },
@@ -35,10 +35,27 @@ const router = createRouter({
           name: 'no holiday create',
           component: () => import('../views/NoHoliday.vue')
         },
+      ]
+    },
+    {
+      name: "admin-layout",
+      path: "/admin/employees",
+      component: () => import('../views/admin/AdminLayout.vue'),
+      children: [
         {
-          path: '/admin',
-          name: 'admin page',
-          component: () => import('../views/AdminPage.vue')
+          name: "employees-list",
+          path: "",
+          component: () => import("../views/admin/AdminClientsList.vue")
+        },
+        {
+          name: "employee-details",
+          path: "/admin/employees/:id",
+          component: () => import("../views/admin/AdminClientDetails.vue")
+        },
+        {
+          path: '/admin/holidays/details/:id',
+          name: 'admins side holiday details',
+          component: () => import('../views/HolidayDetails.vue')
         },
       ]
     }

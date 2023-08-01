@@ -19,6 +19,7 @@ import IconWrapper from '@/components/icons/IconWrapper.vue'
 import IconBlock from '@/components/icons/IconBlock.vue'
 
 export default {
+  name: "FormInput",
   components: {
     IconWrapper,
     IconBlock
