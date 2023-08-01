@@ -20,13 +20,13 @@ const router = createRouter({
           component: () => import('../views/WelcomePage.vue')
         },
         {
-          path: '/holiday-list',
+          path: '/holidays/list',
           name: 'holiday list',
           component: () => import('../views/HolidayList.vue')
 
         },
         {
-          path: '/holiday-details',
+          path: '/holidays/holiday/details/:id',
           name: 'holiday details',
           component: () => import('../views/HolidayDetails.vue')
         },
@@ -51,7 +51,12 @@ const router = createRouter({
           name: "employee-details",
           path: "/admin/employees/:id",
           component: () => import("../views/admin/AdminClientDetails.vue")
-        }
+        },
+        {
+          path: '/admin/holidays/details/:id',
+          name: 'admins side holiday details',
+          component: () => import('../views/HolidayDetails.vue')
+        },
       ]
     }
   ]

@@ -16,7 +16,7 @@
           <IconPlus />
         </div>
 
-        <router-link to="/holiday-list">
+        <router-link to="/holidays/list">
           <div class="relative w-full md:w-[200px]">
             <button
               class="bg-white text-blue-500 p-3 w-full font-semibold flex justify-start pl-12 rounded-lg shadow-md shadow-blue-500">

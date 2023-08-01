@@ -16,7 +16,12 @@
       <IconAddList />
     </section>
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:m-20 p-5">
-      <HolidayCard v-for="holiday in store.holidays" :key="holiday.id" :holiday="holiday" />
+      <router-link 
+        :to="`/holidays/holiday/details/${holiday.id}`" 
+        v-for="holiday in store.holidays" 
+        :key="holiday.id" >
+        <HolidayCard :holiday="holiday" />
+      </router-link>
     </section>
   </section>
 </template>

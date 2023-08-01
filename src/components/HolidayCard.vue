@@ -4,7 +4,9 @@
       <span>{{ getDate }}</span>
       <div class="flex items-center gap-x-4">
         <span>{{ getHour }}</span>
-        <slot name="bulle-icon" />
+        <span class="bulle-info">
+          <slot name="bulle-icon" />
+        </span>
       </div>
     </section>
     <section class="text-blue-500 text-xl font-bold ">
@@ -17,8 +19,8 @@
       </span>
       <span>{{ JSON.parse(holiday.description).status.toLowerCase() }}</span>
     </div>
-    <section class="absolute top-0 right-0 z-10">
-      <slot class="bulle-card" />
+    <section class="absolute top-0 right-0 z-10 bulle-card hidden">
+      <slot />
     </section>
   </section>
 </template>
@@ -50,3 +52,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .bulle-info:hover .bulle-card {
+    @apply inline-flex
+  }
+</style>

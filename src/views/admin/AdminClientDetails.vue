@@ -1,22 +1,22 @@
 <template>
   <section class="space-y-4 py-5 px-10">
     <div class="flex text-xs text-black font-extrabold">
-      Employees > details > {{ holidays.length && holidays[0].client.email }}
+      Employees > details > {{ store.user.email }}
     </div>
     <h1 class="font-semibold text-xl text-zinc-700 py-2 border-b border-t border-black">
-      Employee - {{ holidays.length && holidays[0].client.email }}
+      Employee - {{ store.user.email }}
     </h1>
     <section class="py-5 grid grid-cols-5 items-center gap-4">
-      <HolidayCard v-for="holiday in holidays" 
-        :key="holiday.id" 
-        @click="goToHolidayDetailsPage(holiday.id)">
-        <template #bulle-icon>
-          <IconBulleInfo @mouseover="shouldDisplayValidationOptions = true" />
-        </template>
-        <template #bulle-card>
-          <HolidayCardValidation @mouseleave="shouldDisplayValidationOptions = false" />
-        </template>
-      </HolidayCard>
+      <router-link :to="`/admin/holidays/details/${holiday.id}`" v-for="holiday in holidays" :key="holiday.id">
+        <HolidayCard :holiday="holiday">
+          <template #bulle-icon>
+            <IconBulleInfo class="cursor-pointer" />
+          </template>
+          <template #bulle-card>
+            <HolidayCardValidation />
+          </template>
+        </HolidayCard>
+      </router-link>
     </section>
   </section>
 </template>
@@ -39,14 +39,12 @@ export default {
       store: useHolidayStore()
     }
   },
-  data() {
-    return {
-      shouldDisplayValidationOptions: false,
-    }
+  async beforeMount() {
+    await this.store.getAllHolidays()
   },
   computed: {
     holidays() {
-      return this.store.holidays.filter((holiday) => holiday.client.id == this.$route.params.id)
+      return this.store.holidays.filter((holiday) => holiday.client.email === this.store.user.email)
     }
   }
 }

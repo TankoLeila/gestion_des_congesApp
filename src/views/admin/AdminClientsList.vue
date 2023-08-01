@@ -39,7 +39,7 @@
       </div>
       <section class="flex flex-wrap gap-3">
         <div class="cursor-pointer bg-zinc-100 flex flex-col gap-2 p-4 border hover:border-2 hover:shadow-inner rounded-md" v-for="employee in employees" :key="employee.id"
-          @click="goToEmployeeDetailsPage(employee.id)">
+          @click="goToEmployeeDetailsPage(employee)">
           <div class="text-gray-600">
             <span class="flex gap-x-2 items-center" v-if="employee.hasSendNotification">
               <span class="w-2 h-2 bg-indigo-800 rounded-full block"></span>
@@ -94,8 +94,10 @@ export default {
       this.employees = await this.store.getAllEmployees();
       this.isLoading = false;
     },
-    async goToEmployeeDetailsPage(employeeId) {
-      await this.$router.push(`/admin/employees/${employeeId}`)
+    async goToEmployeeDetailsPage(employee) {
+      this.store.user.email = employee.email
+      this.store.user.id = employee.id
+      await this.$router.push(`/admin/employees/${employee.id}`)
     },
     toggleEmployeeCreationFormDisplay() {
       this.shouldDisplayEmployeeCreationForm = !this.shouldDisplayEmployeeCreationForm
