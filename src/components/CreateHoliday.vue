@@ -1,6 +1,6 @@
 <template>
   <section class="pb-10">
-    <section class="flex flex-col border-b p-4 gap-y-1">
+    <section class="flex flex-col border-b p-4 gap-y-1 text-center">
       <span class="text-lg lg:text-2xl font-bold">Create holiday</span>
       <span>formulaire d'envoie d'une demande de conge</span>
     </section>
