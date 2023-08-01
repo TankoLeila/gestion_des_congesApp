@@ -151,7 +151,7 @@ export default {
       await this.store.createHoliday(this.holiday)
       await this.store.getAllHolidays()
       this.store.show = false
-      this.$router.push('/holiday-list')
+      this.$router.push('/holidays/list')
     }
   }
 }
