@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-white relative" v-if="store.show">
+  <section class="bg-white relative">
     <div class="flex justify-between">
       <div class="p-3">
         <img
@@ -25,18 +25,18 @@
         </svg>
       </div>
     </div>
-    <CreateHoliday class="absolute h-screen w-full" />
+    <CreateHolidayModal v-if="store.show" class="absolute h-screen w-full " />
   </section>
 </template>
 
 <script>
 import { useHolidayStore } from '../stores/holiday'
-import CreateHoliday from './CreateHoliday.vue'
+import CreateHolidayModal from './CreateHolidayModal.vue'
 
 export default {
   name: 'HeaderWrapper',
   components: {
-    CreateHoliday
+    CreateHolidayModal
   },
   setup() {
     return {

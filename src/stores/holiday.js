@@ -14,12 +14,14 @@ export const useHolidayStore = defineStore('holiday', {
         password: ''
       },
       holidays: [],
-      show: false
+      show: false,
+      isLoading:true
     }
   },
   actions: {
     async loginEmployee(client) {
       let id = ''
+      this.isLoading=true
       try {
         id = await ClientService.loginaClient({
           requestBody: {
@@ -35,9 +37,11 @@ export const useHolidayStore = defineStore('holiday', {
       } catch (error) {
         this.setError(error)
       }
+      this.isLoading=false
       return id
     },
     async createEmployee(client) {
+      this.isLoading=true
       try {
         await ClientService.createClient({
           requestBody: {
@@ -48,33 +52,41 @@ export const useHolidayStore = defineStore('holiday', {
       } catch (error) {
         this.setError(error)
       }
+      this.isLoading=false
     },
     async getAllEmployees() {
       let clients = []
+      this.isLoading=true
       try {
         clients = await ClientService.getAllClient()
       } catch (error) {
         this.setError(error)
       }
+      this.isLoading=false
       return clients
     },
     async getHolidayById(holidayId) {
       let holiday = {}
+      this.isLoading=true
       try {
         holiday = await CongeService.fetchHolidayById({ id: holidayId })
       } catch (error) {
         this.setError(error)
       }
-      return holiday
+      this.isLoading=false
+      return holiday  
     },
     async getAllHolidays() {
+      this.isLoading=true
       try {
         this.holidays = await CongeService.getHolidays()
       } catch (error) {
         this.setError(error)
       }
+      this.isLoading=false
     },
     async createHoliday(holiday) {
+      this.isLoading=true
       try {
         await CongeService.createHoliday({
           id: this.user.id,
@@ -94,6 +106,7 @@ export const useHolidayStore = defineStore('holiday', {
       } catch (error) {
         this.setError(error)
       }
+      this.isLoading=false
     },
     setError(error) {
       this.error.email = error.message
