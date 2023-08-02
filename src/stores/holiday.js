@@ -6,7 +6,8 @@ export const useHolidayStore = defineStore('holiday', {
     return {
       error: {
         email: '',
-        password: ''
+        password: '',
+        error:''
       },
       user: {
         id: '',
@@ -15,7 +16,7 @@ export const useHolidayStore = defineStore('holiday', {
       },
       holidays: [],
       show: false,
-      isLoading:true
+      isLoading: false
     }
   },
   actions: {
@@ -104,7 +105,7 @@ export const useHolidayStore = defineStore('holiday', {
           }
         })
       } catch (error) {
-        this.setError(error)
+        this.error.error= error.message
       }
       this.isLoading=false
     },
