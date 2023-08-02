@@ -8,12 +8,16 @@
     </h1>
     <section class="py-5 grid grid-cols-5 items-center gap-4">
       <router-link :to="`/admin/holidays/details/${holiday.id}`" v-for="holiday in holidays" :key="holiday.id">
-        <HolidayCard :holiday="holiday">
+        <HolidayCard :holiday="holiday" @mouseleave="show = false">
           <template #bulle-icon>
-            <IconBulleInfo class="cursor-pointer" />
+            <IconBulleInfo @mouseover="show = true" class="cursor-pointer" />
           </template>
-          <template #bulle-card>
-            <HolidayCardValidation />
+          <template #default>
+            <HolidayCardValidation
+              v-if="show"
+              @rejected=""
+              @approuved="" 
+              class="shadow-lg absolute -top-4 -right-[40%] z-20 bg-white" />
           </template>
         </HolidayCard>
       </router-link>
@@ -38,6 +42,9 @@ export default {
     return {
       store: useHolidayStore()
     }
+  },
+  data(){
+    return { show: false }
   },
   async beforeMount() {
     await this.store.getAllHolidays()

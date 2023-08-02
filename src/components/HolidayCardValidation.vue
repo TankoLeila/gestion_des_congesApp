@@ -1,6 +1,6 @@
 <template>
-  <section class="cursor-pointer first-letter:bg-white rounded-md p-4">
-    <div class="flex gap-x-2 items-center text-red-500 hover:bg-red-200">
+  <section class="cursor-pointer bg-white rounded-md space-y-1 p-0.5">
+    <div class="rounded-md px-4 py-1.5 flex gap-x-2 items-center text-red-500 hover:bg-red-200">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -9,7 +9,7 @@
       <span>rejected</span>
       <IconDeny />
     </div>
-    <div class="flex gap-x-2 items-center text-green-500 hover:bg-green-100">
+    <div class="rounded-md px-4 py-1.5 flex gap-x-2 items-center text-green-500 hover:bg-green-100">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round"
