@@ -9,17 +9,20 @@
         <IconHomeList />
         <p class="font-bold text-lg">Holiday History</p>
       </div>
-      <button @click="store.show = true"
-        class="bg-blue-400 text-white font-semibold rounded-md border-2 p-2 w-[200px] hidden lg:block">
+      <button
+        @click="store.show = true"
+        class="bg-blue-400 text-white font-semibold rounded-md border-2 p-2 w-[200px] hidden lg:block"
+      >
         Create holiday
       </button>
       <IconAddList />
     </section>
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:m-20 p-5">
-      <router-link 
-        :to="`/holidays/holiday/details/${holiday.id}`" 
-        v-for="holiday in store.holidays" 
-        :key="holiday.id" >
+      <router-link
+        :to="`/holidays/holiday/details/${holiday.id}`"
+        v-for="holiday in holidays"
+        :key="holiday.id"
+      >
         <HolidayCard :holiday="holiday" />
       </router-link>
     </section>
@@ -43,9 +46,16 @@ export default {
   setup() {
     return { store: useHolidayStore() }
   },
+  data (){
+      return{
+        holidays:[]
+      }
+  },
   async beforeMount() {
     await this.store.getAllHolidays()
+    this.holidays = this.store.holidays.filter(
+      (holiday) => holiday.client.email === this.store.user.email
+    )
   },
-  
 }
 </script>

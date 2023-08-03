@@ -6,21 +6,22 @@
     </div>
     <section class="lg:m-20 flex justify-between hidden md:block md:m-10 lg:block">
       <div class="flex">
-        <a href="#" class=" text-gray-600">Home</a>
+        <a href="#" class="text-gray-600">Home</a>
         <IconArrow />
-        <a href="#" class=" text-gray-600">Holiday History</a>
+        <a href="#" class="text-gray-600">Holiday History</a>
         <IconArrow />
         <p class="font-bold text-lg">Holiday detail</p>
       </div>
-      <div>
-        status: {{ description.status }}
-      </div>
+      <div>status: {{ description.status }}</div>
     </section>
     <section class="m-10 lg:m-20 space-y-5">
       <div class="">
-        <h1 class="text-xl font-bold text-center md:text-left lg:text-left">{{ holiday.dateDebut }} - {{
-          holiday.dateRetour }}</h1>
-        <p class="text-gray-400 hidden md:block lg:block">Il vous reste {{ remainingDays }} jours(s)</p>
+        <h1 class="text-xl font-bold text-center md:text-left lg:text-left">
+          {{ holiday.dateDebut }} - {{ holiday.dateRetour }}
+        </h1>
+        <p class="text-gray-400 hidden md:block lg:block">
+          Il vous reste {{ remainingDays }} jours(s)
+        </p>
       </div>
       <div class="space-y-5">
         <div class="md:flex md:justify-between w-full lg:flex lg:justify-between space-y-5">
@@ -58,19 +59,18 @@
   </section>
 </template>
 
-
 <script>
-import IconArrow from '../components/icons/IconArrow.vue';
-import IconHome from '../components/icons/IconHome.vue';
-import IconCalendar from '../components/icons/IconCalendar.vue';
-import { useHolidayStore } from '../stores/holiday';
+import IconArrow from '../components/icons/IconArrow.vue'
+import IconHome from '../components/icons/IconHome.vue'
+import IconCalendar from '../components/icons/IconCalendar.vue'
+import { useHolidayStore } from '../stores/holiday'
 
 export default {
-  name: "HolidayDetails",
+  name: 'HolidayDetails',
   components: {
     IconArrow,
     IconHome,
-    IconCalendar,
+    IconCalendar
   },
   setup() {
     return { store: useHolidayStore() }
@@ -80,13 +80,17 @@ export default {
   }),
   computed: {
     remainingDays() {
-      return this.getDays(new Date(this.holiday.dateFin).getTime() - new Date(this.holiday.dateDebut).getTime())
+      return this.getDays(
+        new Date(this.holiday.dateFin).getTime() - new Date(this.holiday.dateDebut).getTime()
+      )
     },
     description() {
-      return this.holiday.description ? JSON.parse(this.holiday.description) : {
-        description: "",
-        status: ""
-      }
+      return this.holiday.description
+        ? JSON.parse(this.holiday.description)
+        : {
+            description: '',
+            status: ''
+          }
     }
   },
   async beforeMount() {
