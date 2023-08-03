@@ -46,6 +46,5 @@ export default {
   async beforeMount() {
     await this.store.getAllHolidays()
   },
-  
 }
 </script>
