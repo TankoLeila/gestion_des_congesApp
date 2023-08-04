@@ -70,8 +70,10 @@
           @click="goToEmployeeDetailsPage(employee)"
         >
           <div class="text-gray-600">
-            <span class="flex gap-x-2 items-center" v-if="employee.hasSendNotification">
-              <span class="w-2 h-2 bg-indigo-800 rounded-full block"></span>
+            <span class="flex gap-x-0.5 items-center" 
+              v-if="getNumberOfNotification(employee.id)"
+            >
+              <span class="w-2 h-2 bg-blue-500 rounded-full block"></span>
               <IconBellActivated class="rotate-45" />
             </span>
             <IconBellInactivated class="-rotate-12" v-else />
@@ -135,10 +137,17 @@ export default {
     },
     toggleEmployeeCreationFormDisplay() {
       this.shouldDisplayEmployeeCreationForm = !this.shouldDisplayEmployeeCreationForm
+    },
+    getNumberOfNotification(clientId) {
+      return this.store.holidays
+        .filter((holiday) => holiday.client.id === clientId)
+        .filter((holiday) => JSON.parse(holiday.description).status === 'PENDING')
+        .length
     }
   },
   async beforeMount() {
     await this.getAllEmployees()
+    await this.store.getAllHolidays()
   }
 }
 </script>
