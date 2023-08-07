@@ -5,12 +5,12 @@
       <IconHome />
     </div>
     <section class="lg:m-20 flex justify-between hidden md:block md:m-10 lg:block">
-      <div class="flex">
+      <div class="flex items-center gap-2">
         <a href="#" class="text-gray-600">Home</a>
         <IconArrow />
         <a href="#" class="text-gray-600">Holiday History</a>
         <IconArrow />
-        <p class="font-bold text-lg">Holiday detail</p>
+        <p class="font-bold text-lg">Holiday details</p>
       </div>
       <div>status: {{ description.status }}</div>
     </section>
@@ -61,7 +61,6 @@
 
 <script>
 import IconArrow from '../components/icons/IconArrow.vue'
-import IconHome from '../components/icons/IconHome.vue'
 import IconCalendar from '../components/icons/IconCalendar.vue'
 import { useHolidayStore } from '../stores/holiday'
 
@@ -69,7 +68,6 @@ export default {
   name: 'HolidayDetails',
   components: {
     IconArrow,
-    IconHome,
     IconCalendar
   },
   setup() {

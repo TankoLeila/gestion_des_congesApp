@@ -119,6 +119,7 @@ export default {
   data() {
     return {
       employees: [],
+      holidays: [],
       isLoading: false,
       shouldDisplayEmployeeCreationForm: false
     }
@@ -128,18 +129,20 @@ export default {
       this.isLoading = true
       this.shouldDisplayEmployeeCreationForm = false
       this.employees = await this.store.getAllEmployees()
+      this.holidays = await this.store.getAllHolidays()
       this.isLoading = false
     },
     async goToEmployeeDetailsPage(employee) {
       this.store.user.email = employee.email
       this.store.user.id = employee.id
+      localStorage.setItem("profil", employee.email)
       await this.$router.push(`/admin/employees/${employee.id}`)
     },
     toggleEmployeeCreationFormDisplay() {
       this.shouldDisplayEmployeeCreationForm = !this.shouldDisplayEmployeeCreationForm
     },
     getNumberOfNotification(clientId) {
-      return this.store.holidays
+      return this.holidays
         .filter((holiday) => holiday.client.id === clientId)
         .filter((holiday) => JSON.parse(holiday.description).status === 'PENDING')
         .length

@@ -1,12 +1,12 @@
 <template>
   <section class="bg-white h-screen">
-    <section class="m-10 lg:m-20 flex justify-between">
+    <section class="p-10 lg:p-20 flex justify-between">
       <div class="font-bold text-xl lg:hidden">
         <h1>Holidays</h1>
       </div>
-      <div class="flex hidden lg:block lg:flex">
+      <div class="flex hidden items-center gap-2 lg:block lg:flex">
         <a href="#" class="text-gray-600">Home</a>
-        <IconHomeList />
+        <IconArrow />
         <p class="font-bold text-lg">Holiday History</p>
       </div>
       <button
@@ -30,31 +30,32 @@
 </template>
 
 <script>
-import IconHomeList from '../components/icons/IconHomeList.vue'
 import IconAddList from '../components/icons/IconAddList.vue'
 import HolidayCard from '../components/HolidayCard.vue'
 import { useHolidayStore } from '../stores/holiday'
+import IconArrow from '../components/icons/IconArrow.vue'
 
 export default {
   name: 'HolidayList',
   components: {
-    IconHomeList,
     IconAddList,
-    HolidayCard
-  },
+    HolidayCard,
+    IconArrow
+},
 
   setup() {
     return { store: useHolidayStore() }
   },
   data (){
       return{
-        holidays:[]
+        holidays:[],
+        email: localStorage.getItem("profil")
       }
   },
   async beforeMount() {
-    await this.store.getAllHolidays()
-    this.holidays = this.store.holidays.filter(
-      (holiday) => holiday.client.email === this.store.user.email
+    const _holidays = await this.store.getAllHolidays()
+    this.holidays = _holidays.filter(
+      (holiday) => holiday.client.email === this.email
     )
   },
 }

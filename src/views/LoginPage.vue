@@ -92,6 +92,7 @@ export default {
         })
         if (id) {
           this.$router.push('/welcome')
+          localStorage.setItem("userId", id)
         }
         Object.assign(this.vuelidateExternalResults, this.store.error)
       }
