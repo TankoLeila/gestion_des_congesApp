@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-white relative">
+  <section class="bg-gray-100 relative">
     <div class="flex justify-between">
       <div class="p-3">
         <img
