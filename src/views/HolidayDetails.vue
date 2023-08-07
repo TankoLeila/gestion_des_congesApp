@@ -76,7 +76,7 @@ export default {
     return { store: useHolidayStore() }
   },
   data: () => ({
-    holiday: {}
+    holiday: {},
   }),
   computed: {
     remainingDays() {

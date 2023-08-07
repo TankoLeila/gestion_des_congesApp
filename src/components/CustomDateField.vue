@@ -3,12 +3,12 @@
     <label class="text-xs font-medium" :for="label">{{ label }}</label>
     <div
       :class="[
-        'rounded border border-gray-200 p-2 text-gray-900',
+        'rounded border border-gray-200 p-2 text-gray-500',
         errors.length ? 'error' : 'default'
       ]"
     >
       <input
-        class="w-full outline-none"
+        class="w-full outline-none placeholder:text-gray-300"
         type="date"
         :id="label"
         placeholder="YYYY-MM-DD"

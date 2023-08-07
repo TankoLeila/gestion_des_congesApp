@@ -9,7 +9,7 @@
     >
       <input
         type="text"
-        class="px-2 placeholder:text-zinc-900 h-full w-full absolute top-0 left-0 outline-none rounded-md"
+        class="px-2 placeholder:text-zinc-500 h-full w-full absolute top-0 left-0 outline-none rounded-md"
         placeholder="choose your type here"
         v-model="selectedOption"
         readonly="false"

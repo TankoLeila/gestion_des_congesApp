@@ -1,6 +1,6 @@
 <template>
   <section class="h-screen flex flex-col relative">
-    <section class="p-4 flex justify-between items-center shadow-sm">
+    <section class="p-4 bg-white flex justify-between items-center shadow-sm">
       <div class="p-3">
         <img
           src="../../assets/HolidayTracker.png"
@@ -8,7 +8,7 @@
           class="h-[70px] border-2 rounded-2xl"
         />
       </div>
-      <div class="px-4 border-l border-indigo-600 flex flex-col items-start gap-y-2">
+      <div class="px-4++ border-l border-indigo-600 flex flex-col items-start gap-y-2">
         <span class="text-indigo-800 font-semi-bold text-sm">Leila Tanko</span>
         <span
           class="text-indigo-800 font-bold text-xs flex items-center gap-x-2 bg-indigo-200 rounded-md px-2 py-1"
@@ -19,7 +19,7 @@
       </div>
     </section>
     <section class="flex divide-x-2">
-      <section class="w-1/4 max-w-[120px] p-4 space-y-7">
+      <section class="w-1/4 bg-white  max-w-[120px] p-4 space-y-7">
         <div class="flex gap-x-4 items-center">
           <span class="text-gray-900 font-extrabold text-lg">MENU</span>
           <svg
