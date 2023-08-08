@@ -27,11 +27,16 @@
         />
         <FormInput
           v-model="password"
-          type="password"
+          :type="passwordFieldType"
           placeholder="Enter your Password"
           label="Password"
           :errors="v$.password.$errors"
-        />
+        >
+          <div class="absolute right-4 top-4 cursor-pointer flex items-center justify-center" @click="passwordVisibility">
+            <IconPasswordShow v-if="showPassword" />
+            <IconPasswordClose v-else />
+          </div>
+        </FormInput>
         <div class="border-blue-200">
           <button
             @click="loginToApp"
@@ -50,12 +55,17 @@ import FormInput from '../components/FormInput.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import { useHolidayStore } from '@/stores/holiday'
+import IconPasswordShow from '../components/icons/IconPasswordShow.vue'
+import IconPasswordClose from '../components/icons/IconPasswordClose.vue'
 
 export default {
   name: 'LoginPage',
   components: {
-    FormInput
+    FormInput,
+    IconPasswordShow,
+    IconPasswordClose
   },
+
   setup() {
     return {
       v$: useVuelidate(),
@@ -66,6 +76,8 @@ export default {
     return {
       email: '',
       password: '',
+      showPassword: false,
+      passwordFieldType: 'password',
       vuelidateExternalResults: {
         email: '',
         password: ''
@@ -92,10 +104,14 @@ export default {
         })
         if (id) {
           this.$router.push('/welcome')
-          localStorage.setItem("userId", id)
+          localStorage.setItem('userId', id)
         }
         Object.assign(this.vuelidateExternalResults, this.store.error)
       }
+    },
+    passwordVisibility() {
+      this.showPassword = !this.showPassword
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
     }
   },
   watch: {

@@ -1,31 +1,31 @@
 <template>
   <section class="space-y-4 py-5 px-10">
-    <div class="flex text-xs text-black font-extrabold">
-      Employees > details > {{ email }}
-    </div>
+    <div class="flex text-xs text-black font-extrabold">Employees > details > {{ email }}</div>
     <h1 class="font-semibold text-xl text-zinc-700 py-2 border-b border-t border-black">
       Employee - {{ email }}
     </h1>
     <section class="py-5 grid grid-cols-5 items-center gap-4">
-      <router-link
-        :to="`/admin/holidays/details/${holiday.id}`"
+      <HolidayCard
         v-for="holiday in holidays"
         :key="holiday.id"
+        :holiday="holiday"
+        @mouseleave="currentHoverId = ''"
+        @click.stop="goToDetailsOf(holiday.id)"
       >
-        <HolidayCard :holiday="holiday" @mouseleave="show = false">
-          <template #bulle-icon>
-            <IconBulleInfo @mouseover="show = true" class="cursor-pointer" />
-          </template>
-          <template #default>
-            <HolidayCardValidation
-              v-if="show"
-              @rejected=""
-              @approuved=""
-              class="shadow-lg absolute -top-4 -right-[40%] z-20 bg-white"
-            />
-          </template>
-        </HolidayCard>
-      </router-link>
+        <template #bulle-icon>
+          <IconBulleInfo @mouseover="currentHoverId = holiday.id" class="cursor-pointer" />
+        </template>
+        <template #default>
+          <HolidayCardValidation
+            v-if="
+              holiday.id === currentHoverId && JSON.parse(holiday.description).status === 'PENDING'
+            "
+            @rejected="rejectHoliday(holiday)"
+            @approved="approuveHoliday(holiday)"
+            class="shadow-lg absolute -top-4 -right-[40%] z-20 bg-white"
+          />
+        </template>
+      </HolidayCard>
     </section>
   </section>
 </template>
@@ -49,14 +49,30 @@ export default {
     }
   },
   data() {
-    return { show: false, holidays: [], email: localStorage.getItem('profil')}
+    return { currentHoverId: '', holidays: [], email: localStorage.getItem('profil') }
   },
   async beforeMount() {
     const _holidays = await this.store.getAllHolidays()
-    this.holidays = _holidays.filter(
-      (holiday) =>
-        holiday.client.email === (this.email)
-    )
+    this.holidays = _holidays.filter((holiday) => holiday.client.email === this.email)
+  },
+  methods: {
+    async approuveHoliday(holiday) {
+      const description = JSON.parse(holiday.description)
+      console.log(console.log("dscp rcue", JSON.parse(holiday.description).status = 'ee'));
+
+      description.status = 'APPROUVED'
+
+      await this.store.validateHoliday(holiday.id, `${description}`)
+    },
+    async rejectHoliday(holiday) {
+      const description = JSON.parse(holiday.description)
+      description.status = 'REJECTED'
+
+      await this.store.validateHoliday(holiday.id, `${description}`)
+    },
+    goToDetailsOf(id) {
+      this.$router.push(`/admin/holidays/details/${id}`)
+    }
   }
 }
 </script>

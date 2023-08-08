@@ -19,7 +19,7 @@
             'bg-gray-200 text-gray-500':
               JSON.parse(holiday.description).status.toLowerCase() === 'pending',
             'bg-green-200 text-green-500':
-              JSON.parse(holiday.description).status.toLowerCase() === 'approuve',
+              JSON.parse(holiday.description).status.toLowerCase() === 'approuved',
             'bg-red-200 text-red-500':
               JSON.parse(holiday.description).status.toLowerCase() === 'rejected'
           }

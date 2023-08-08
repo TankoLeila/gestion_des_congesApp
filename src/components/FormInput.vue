@@ -13,6 +13,7 @@
         ]"
       />
       <component class="absolute left-3 bottom-3.5" :is="icons[label.toLowerCase()]" />
+      <slot></slot>
     </div>
   </div>
 </template>

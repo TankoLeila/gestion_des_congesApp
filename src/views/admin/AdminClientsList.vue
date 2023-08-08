@@ -70,9 +70,7 @@
           @click="goToEmployeeDetailsPage(employee)"
         >
           <div class="text-gray-600">
-            <span class="flex gap-x-0.5 items-center" 
-              v-if="getNumberOfNotification(employee.id)"
-            >
+            <span class="flex gap-x-0.5 items-center" v-if="getNumberOfNotification(employee.id)">
               <span class="w-2 h-2 bg-blue-500 rounded-full block"></span>
               <IconBellActivated class="rotate-45" />
             </span>
@@ -135,7 +133,7 @@ export default {
     async goToEmployeeDetailsPage(employee) {
       this.store.user.email = employee.email
       this.store.user.id = employee.id
-      localStorage.setItem("profil", employee.email)
+      localStorage.setItem('profil', employee.email)
       await this.$router.push(`/admin/employees/${employee.id}`)
     },
     toggleEmployeeCreationFormDisplay() {
@@ -144,8 +142,7 @@ export default {
     getNumberOfNotification(clientId) {
       return this.holidays
         .filter((holiday) => holiday.client.id === clientId)
-        .filter((holiday) => JSON.parse(holiday.description).status === 'PENDING')
-        .length
+        .filter((holiday) => JSON.parse(holiday.description).status === 'PENDING').length
     }
   },
   async beforeMount() {

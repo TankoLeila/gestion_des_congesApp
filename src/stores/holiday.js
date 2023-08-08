@@ -29,7 +29,7 @@ export const useHolidayStore = defineStore('holiday', {
             password: client.password
           }
         })
-        localStorage.setItem("profil", client.email)
+        localStorage.setItem('profil', client.email)
         Object.assign(this.user, {
           id,
           email: client.email,
@@ -79,20 +79,20 @@ export const useHolidayStore = defineStore('holiday', {
     },
     async getAllHolidays() {
       this.isLoading = true
-      let holidays = [];
+      let holidays = []
       try {
         holidays = await CongeService.getHolidays()
       } catch (error) {
         this.setError(error)
       }
       this.isLoading = false
-      return holidays;
+      return holidays
     },
     async createHoliday(holiday) {
       this.isLoading = true
       try {
         await CongeService.createHoliday({
-          id: this.user.id || localStorage.getItem("userId"),
+          id: this.user.id || localStorage.getItem('userId'),
           requestBody: {
             dateDebut: holiday.dateDebut,
             dateFin: holiday.dateFin,
@@ -108,6 +108,18 @@ export const useHolidayStore = defineStore('holiday', {
         })
       } catch (error) {
         this.error.error = error.message
+      }
+      this.isLoading = false
+    },
+    async validateHoliday(id, description) {
+      this.isLoading = true
+      try {
+        await CongeService.patchHoliday({
+          id,
+          requestBody: JSON.stringify(description)
+        })
+      } catch (error) {
+        this.setError(error)
       }
       this.isLoading = false
     },
