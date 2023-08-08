@@ -1,6 +1,6 @@
 <template>
-  <section class="bg-white h-screen">
-    <section class="p-10 lg:p-20 flex justify-between">
+  <section class="bg-gray-100 h-screen">
+    <section class="p-10 lg:px-20 flex justify-between">
       <div class="font-bold text-xl lg:hidden">
         <h1>Holidays</h1>
       </div>
@@ -17,7 +17,7 @@
       </button>
       <IconAddList />
     </section>
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:m-20 p-5">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-20 p-5">
       <router-link
         :to="`/holidays/holiday/details/${holiday.id}`"
         v-for="holiday in holidays"

@@ -1,9 +1,9 @@
 <template>
-  <section class="text-black space-y-2 text-xs lg:mt-2 relative">
+  <section class="text-gray-600 space-y-2.5 text-xs relative">
     <span>{{ label }}</span>
     <section
       :class="[
-        'border rounded-md relative h-11 rounded border border-gray-200 p-2 text-gray-900 rounded border border-gray-200 p-2 text-gray-300',
+        'border rounded relative h-10 rounded border border-gray-200 p-2',
         errors.length ? 'error' : 'default'
       ]"
     >

@@ -2,7 +2,7 @@
   <section class="cursor-pointer bg-white rounded-md space-y-1 p-0.5">
     <div
       @click.stop="$emit('rejected')"
-      class="rounded-md px-4 py-1.5 flex gap-x-2 items-center text-red-500 hover:bg-red-200"
+      class="rounded-md px-4 py-1.5 flex gap-x-2 items-center text-red-500 hover:bg-red-100"
     >
       <span>rejected</span>
       <IconDeny />

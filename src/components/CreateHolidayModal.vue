@@ -8,7 +8,7 @@
         <section
           class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg"
         >
-          <CreateHoliday class="border"/>
+          <CreateHoliday @close="$emit('close')" class="border"/>
         </section>
       </section>
     </section>
@@ -22,5 +22,6 @@ export default {
   components: {
     CreateHoliday
   },
+  emits: ['close']
 }
 </script>

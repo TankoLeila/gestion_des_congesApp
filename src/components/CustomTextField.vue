@@ -3,7 +3,7 @@
     <label class="text-xs font-medium" :for="label">{{ label }}</label>
     <div
       :class="[
-        'rounded border border-gray-200 p-2 text-gray-900 h-11',
+        'rounded border border-gray-200 p-2 text-gray-900 h-10',
         errors.length ? 'error' : 'default'
       ]"
     >

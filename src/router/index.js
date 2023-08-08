@@ -55,7 +55,7 @@ const router = createRouter({
         {
           path: '/admin/holidays/details/:id',
           name: 'admins side holiday details',
-          component: () => import('../views/HolidayDetails.vue')
+          component: () => import('../views/admin/AdminHolidayDetails.vue')
         },
       ]
     }

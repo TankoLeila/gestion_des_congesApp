@@ -1,10 +1,18 @@
 <template>
   <section class="space-y-4 py-5 px-10">
-    <div class="flex text-xs text-black font-extrabold">Employees > details > {{ email }}</div>
-    <h1 class="font-semibold text-xl text-zinc-700 py-2 border-b border-t border-black">
-      Employee - {{ email }}
+    <div class="flex text-xs text-black font-extrabold gap-x-1">
+      <RouterLink to="/admin/employees">
+        <span class="cursor-pointer">Employees > details ></span>
+      </RouterLink>
+      <span class="text-gray-600">{{ email }}</span>
+    </div>
+    <h1
+      class="font-thin text-xl text-zinc-700 py-2 border-[1px] border-b border-t border-gray-100 flex gap-x-2 flex"
+    >
+      <span>Employee </span>
+      <span class="text-gray-900">- {{ email }}</span>
     </h1>
-    <section class="py-5 grid grid-cols-5 items-center gap-4">
+    <section class="py-5 grid grid-cols-5 items-end gap-4">
       <HolidayCard
         v-for="holiday in holidays"
         :key="holiday.id"
@@ -13,15 +21,20 @@
         @click.stop="goToDetailsOf(holiday.id)"
       >
         <template #bulle-icon>
-          <IconBulleInfo @mouseover="currentHoverId = holiday.id" class="cursor-pointer" />
+          <IconBulleInfo
+            v-if="JSON.parse(holiday.description).status === 'PENDING'"
+            @mouseover="currentHoverId = holiday.id"
+            class="cursor-pointer"
+          />
         </template>
         <template #default>
           <HolidayCardValidation
             v-if="
-              holiday.id === currentHoverId && JSON.parse(holiday.description).status === 'PENDING'
+              holiday.id === currentHoverId &&
+              JSON.parse(holiday.description).status === 'PENDING'
             "
-            @rejected="rejectHoliday(holiday)"
-            @approved="approuveHoliday(holiday)"
+            @rejected="validatHoliday(holiday, 'REJECTED')"
+            @approved="validatHoliday(holiday, 'APPROVED')"
             class="shadow-lg absolute -top-4 -right-[40%] z-20 bg-white"
           />
         </template>
@@ -31,48 +44,48 @@
 </template>
 
 <script>
-import HolidayCard from '@/components/HolidayCard.vue'
-import HolidayCardValidation from '@/components/HolidayCardValidation.vue'
-import IconBulleInfo from '@/components/icons/IconBulleInfo.vue'
-import { useHolidayStore } from '../../stores/holiday'
+import HolidayCard from "@/components/HolidayCard.vue";
+import HolidayCardValidation from "@/components/HolidayCardValidation.vue";
+import IconBulleInfo from "@/components/icons/IconBulleInfo.vue";
+import { useHolidayStore } from "../../stores/holiday";
 
 export default {
-  name: 'AdminEmployeeDetails',
+  name: "AdminEmployeeDetails",
   components: {
     HolidayCard,
     HolidayCardValidation,
-    IconBulleInfo
+    IconBulleInfo,
   },
   setup() {
     return {
-      store: useHolidayStore()
-    }
+      store: useHolidayStore(),
+    };
   },
   data() {
-    return { currentHoverId: '', holidays: [], email: localStorage.getItem('profil') }
+    return { currentHoverId: "", holidays: [], email: localStorage.getItem("profil") };
   },
   async beforeMount() {
-    const _holidays = await this.store.getAllHolidays()
-    this.holidays = _holidays.filter((holiday) => holiday.client.email === this.email)
+    await this.fetchAllHolidays();
   },
   methods: {
-    async approuveHoliday(holiday) {
-      const description = JSON.parse(holiday.description)
-      console.log(console.log("dscp rcue", JSON.parse(holiday.description).status = 'ee'));
+    async validatHoliday(holiday, status) {
+      const dto = JSON.parse(holiday.description);
+      const description = {
+        status,
+        description: dto.description,
+        createdAt: dto.createdAt,
+      };
 
-      description.status = 'APPROUVED'
-
-      await this.store.validateHoliday(holiday.id, `${description}`)
-    },
-    async rejectHoliday(holiday) {
-      const description = JSON.parse(holiday.description)
-      description.status = 'REJECTED'
-
-      await this.store.validateHoliday(holiday.id, `${description}`)
+      await this.store.validateHoliday(holiday.id, JSON.stringify(description));
+      await this.fetchAllHolidays();
     },
     goToDetailsOf(id) {
-      this.$router.push(`/admin/holidays/details/${id}`)
-    }
-  }
-}
+      this.$router.push(`/admin/holidays/details/${id}`);
+    },
+    async fetchAllHolidays() {
+      const _holidays = await this.store.getAllHolidays();
+      this.holidays = _holidays.filter((holiday) => holiday.client.email === this.email);
+    },
+  },
+};
 </script>

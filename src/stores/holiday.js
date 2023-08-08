@@ -30,6 +30,7 @@ export const useHolidayStore = defineStore('holiday', {
           }
         })
         localStorage.setItem('profil', client.email)
+        localStorage.setItem('userId', id)
         Object.assign(this.user, {
           id,
           email: client.email,
@@ -116,7 +117,9 @@ export const useHolidayStore = defineStore('holiday', {
       try {
         await CongeService.patchHoliday({
           id,
-          requestBody: JSON.stringify(description)
+          requestBody: {
+            description
+          }
         })
       } catch (error) {
         this.setError(error)

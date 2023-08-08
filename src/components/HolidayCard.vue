@@ -7,20 +7,20 @@
     <section class="text-blue-500 text-sm font-bold">
       {{ holiday.dateDebut }} - {{ holiday.dateFin }}
     </section>
-    <div class="text-xs text-ellipsis">{{ JSON.parse(holiday.description).description }}</div>
-    <div class="flex p-2 justify-between items-center">
-      <span class="bg-blue-300 px-3 py-1 text-center text-blue-600 font-semibold rounded-2xl">
+    <div class="text-xs line-clamp-1 text-ellipsis">{{ JSON.parse(holiday.description).description }}</div>
+    <div class="flex p-2 justify-between items-stretch">
+      <span class="bg-blue-100 px-3 py-1 text-center text-blue-500 font-semibold rounded-lg">
         {{ holiday.type.toLowerCase() }}
       </span>
       <span
         :class="[
           'rounded-lg p-2 text-sm font-bold',
           {
-            'bg-gray-200 text-gray-500':
+            'bg-gray-100 text-gray-500':
               JSON.parse(holiday.description).status.toLowerCase() === 'pending',
-            'bg-green-200 text-green-500':
-              JSON.parse(holiday.description).status.toLowerCase() === 'approuved',
-            'bg-red-200 text-red-500':
+            'bg-green-100 text-green-500':
+              JSON.parse(holiday.description).status.toLowerCase() === 'approved',
+            'bg-red-100 text-red-500':
               JSON.parse(holiday.description).status.toLowerCase() === 'rejected'
           }
         ]"

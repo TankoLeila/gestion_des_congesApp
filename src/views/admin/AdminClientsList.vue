@@ -134,6 +134,7 @@ export default {
       this.store.user.email = employee.email
       this.store.user.id = employee.id
       localStorage.setItem('profil', employee.email)
+      localStorage.setItem('profilId', employee.id)
       await this.$router.push(`/admin/employees/${employee.id}`)
     },
     toggleEmployeeCreationFormDisplay() {
