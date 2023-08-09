@@ -28,7 +28,7 @@
             >
               <span class="font-bold text-sm">Your Holidays list</span>
             </button>
-            <IconCalendar />
+            <IconCalendar class="absolute" />
           </div>
         </router-link>
       </div>

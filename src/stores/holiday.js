@@ -6,22 +6,22 @@ export const useHolidayStore = defineStore('holiday', {
     return {
       error: {
         email: '',
-        password: ''
+        password: '',
+        error: ''
       },
       user: {
         id: '',
         email: '',
         password: ''
       },
-      holidays: [],
       show: false,
-      isLoading:true
+      isLoading: false
     }
   },
   actions: {
     async loginEmployee(client) {
       let id = ''
-      this.isLoading=true
+      this.isLoading = true
       try {
         id = await ClientService.loginaClient({
           requestBody: {
@@ -29,6 +29,8 @@ export const useHolidayStore = defineStore('holiday', {
             password: client.password
           }
         })
+        localStorage.setItem('profil', client.email)
+        localStorage.setItem('userId', id)
         Object.assign(this.user, {
           id,
           email: client.email,
@@ -37,11 +39,11 @@ export const useHolidayStore = defineStore('holiday', {
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
+      this.isLoading = false
       return id
     },
     async createEmployee(client) {
-      this.isLoading=true
+      this.isLoading = true
       try {
         await ClientService.createClient({
           requestBody: {
@@ -52,44 +54,46 @@ export const useHolidayStore = defineStore('holiday', {
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
+      this.isLoading = false
     },
     async getAllEmployees() {
       let clients = []
-      this.isLoading=true
+      this.isLoading = true
       try {
         clients = await ClientService.getAllClient()
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
+      this.isLoading = false
       return clients
     },
     async getHolidayById(holidayId) {
       let holiday = {}
-      this.isLoading=true
+      this.isLoading = true
       try {
         holiday = await CongeService.fetchHolidayById({ id: holidayId })
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
-      return holiday  
+      this.isLoading = false
+      return holiday
     },
     async getAllHolidays() {
-      this.isLoading=true
+      this.isLoading = true
+      let holidays = []
       try {
-        this.holidays = await CongeService.getHolidays()
+        holidays = await CongeService.getHolidays()
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
+      this.isLoading = false
+      return holidays
     },
     async createHoliday(holiday) {
-      this.isLoading=true
+      this.isLoading = true
       try {
         await CongeService.createHoliday({
-          id: this.user.id,
+          id: this.user.id || localStorage.getItem('userId'),
           requestBody: {
             dateDebut: holiday.dateDebut,
             dateFin: holiday.dateFin,
@@ -99,14 +103,28 @@ export const useHolidayStore = defineStore('holiday', {
             nbrJour: holiday.nbrJour,
             client: {
               email: this.user.email,
-              id: this.user.id,
+              id: this.user.id
             }
+          }
+        })
+      } catch (error) {
+        this.error.error = error.message
+      }
+      this.isLoading = false
+    },
+    async validateHoliday(id, description) {
+      this.isLoading = true
+      try {
+        await CongeService.patchHoliday({
+          id,
+          requestBody: {
+            description
           }
         })
       } catch (error) {
         this.setError(error)
       }
-      this.isLoading=false
+      this.isLoading = false
     },
     setError(error) {
       this.error.email = error.message

@@ -70,8 +70,8 @@
           @click="goToEmployeeDetailsPage(employee)"
         >
           <div class="text-gray-600">
-            <span class="flex gap-x-2 items-center" v-if="employee.hasSendNotification">
-              <span class="w-2 h-2 bg-indigo-800 rounded-full block"></span>
+            <span class="flex gap-x-0.5 items-center" v-if="getNumberOfNotification(employee.id)">
+              <span class="w-2 h-2 bg-blue-500 rounded-full block"></span>
               <IconBellActivated class="rotate-45" />
             </span>
             <IconBellInactivated class="-rotate-12" v-else />
@@ -117,6 +117,7 @@ export default {
   data() {
     return {
       employees: [],
+      holidays: [],
       isLoading: false,
       shouldDisplayEmployeeCreationForm: false
     }
@@ -126,19 +127,28 @@ export default {
       this.isLoading = true
       this.shouldDisplayEmployeeCreationForm = false
       this.employees = await this.store.getAllEmployees()
+      this.holidays = await this.store.getAllHolidays()
       this.isLoading = false
     },
     async goToEmployeeDetailsPage(employee) {
       this.store.user.email = employee.email
       this.store.user.id = employee.id
+      localStorage.setItem('profil', employee.email)
+      localStorage.setItem('profilId', employee.id)
       await this.$router.push(`/admin/employees/${employee.id}`)
     },
     toggleEmployeeCreationFormDisplay() {
       this.shouldDisplayEmployeeCreationForm = !this.shouldDisplayEmployeeCreationForm
+    },
+    getNumberOfNotification(clientId) {
+      return this.holidays
+        .filter((holiday) => holiday.client.id === clientId)
+        .filter((holiday) => JSON.parse(holiday.description).status === 'PENDING').length
     }
   },
   async beforeMount() {
     await this.getAllEmployees()
+    await this.store.getAllHolidays()
   }
 }
 </script>

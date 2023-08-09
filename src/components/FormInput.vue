@@ -7,9 +7,13 @@
         :placeholder="placeholder"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        :class="['outline-none rounded-lg px-12 text-[15px] h-full', errors.length ? 'error' : 'default']"
+        :class="[
+          'outline-none rounded-lg px-12 text-[15px] h-full',
+          errors.length ? 'error' : 'default'
+        ]"
       />
       <component class="absolute left-3 bottom-3.5" :is="icons[label.toLowerCase()]" />
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -19,7 +23,7 @@ import IconWrapper from '@/components/icons/IconWrapper.vue'
 import IconBlock from '@/components/icons/IconBlock.vue'
 
 export default {
-  name: "FormInput",
+  name: 'FormInput',
   components: {
     IconWrapper,
     IconBlock
