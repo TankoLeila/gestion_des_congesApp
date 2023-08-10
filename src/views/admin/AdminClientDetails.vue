@@ -12,7 +12,7 @@
       <span>Employee </span>
       <span class="text-gray-900">- {{ email }}</span>
     </h1>
-    <section class="py-5 grid grid-cols-5 items-end gap-4">
+    <section class="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-col-3 xl:grid-cols-5 items-end gap-4">
       <HolidayCard
         v-for="holiday in holidays"
         :key="holiday.id"

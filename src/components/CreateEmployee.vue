@@ -77,15 +77,15 @@ export default {
   },
   watch: {
     email(newEmail) {
-      if(newEmail && this.store.error.email) {
-        Object.assign(this.store.error, {email: "", password: ""})
-        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      if (newEmail && this.store.error.email) {
+        Object.assign(this.store.error, { email: "", password: "" })
+        Object.assign(this.vuelidateExternalResults, { email: "", password: "" })
       }
     },
     password(newPassword) {
-      if(newPassword && this.store.error.password) {
-        Object.assign(this.store.error, {email: "", password: ""})
-        Object.assign(this.vuelidateExternalResults, {email: "", password: ""})
+      if (newPassword && this.store.error.password) {
+        Object.assign(this.store.error, { email: "", password: "" })
+        Object.assign(this.vuelidateExternalResults, { email: "", password: "" })
       }
     },
   },

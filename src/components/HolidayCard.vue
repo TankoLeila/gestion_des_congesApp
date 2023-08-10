@@ -12,20 +12,17 @@
       <span class="bg-blue-100 px-3 py-1 text-center text-blue-500 font-semibold rounded-lg">
         {{ holiday.type.toLowerCase() }}
       </span>
-      <span
-        :class="[
-          'rounded-lg p-2 text-sm font-bold',
-          {
-            'bg-gray-100 text-gray-500':
-              JSON.parse(holiday.description).status.toLowerCase() === 'pending',
-            'bg-green-100 text-green-500':
-              JSON.parse(holiday.description).status.toLowerCase() === 'approved',
-            'bg-red-100 text-red-500':
-              JSON.parse(holiday.description).status.toLowerCase() === 'rejected'
-          }
-        ]"
-        >{{ JSON.parse(holiday.description).status.toLowerCase() }}</span
-      >
+      <span :class="[
+        'rounded-lg p-2 text-sm font-bold',
+        {
+          'bg-gray-100 text-gray-500':
+            JSON.parse(holiday.description).status.toLowerCase() === 'pending',
+          'bg-green-100 text-green-500':
+            JSON.parse(holiday.description).status.toLowerCase() === 'approved',
+          'bg-red-100 text-red-500':
+            JSON.parse(holiday.description).status.toLowerCase() === 'rejected'
+        }
+      ]">{{ JSON.parse(holiday.description).status.toLowerCase() }}</span>
     </div>
     <slot />
   </section>

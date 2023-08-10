@@ -101,10 +101,7 @@ export default {
   }),
   computed: {
     remainingDays() {
-      return this.getDays(
-        new Date(this.holiday.dateFin).getTime() -
-          new Date(this.holiday.dateDebut).getTime()
-      );
+      return dayjs(this.holiday.dateFin).diff(dayjs(this.holiday.dateDebut), 'days');
     },
     returningDate() {
       return dayjs(this.holiday.dateRetour).format("MMM D, YYYY");
@@ -128,9 +125,6 @@ export default {
     this.holiday = await this.store.getHolidayById(this.$route.params.id);
   },
   methods: {
-    getDays(time) {
-      return (60 * 360000 * 24) / time;
-    },
     backToList() {
       this.$router.push("/holidays/list");
     },

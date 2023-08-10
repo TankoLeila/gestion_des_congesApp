@@ -15,9 +15,9 @@
       >
         Create holiday
       </button>
-      <IconAddList />
+      <IconAddList  @click="store.show = true" />
     </section>
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:mx-20 p-5">
+    <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 lg:mx-20 p-5">
       <router-link
         :to="`/holidays/holiday/details/${holiday.id}`"
         v-for="holiday in holidays"
