@@ -10,8 +10,14 @@
       </span>
       <div class="space-y-5">
         <FormInput :errors="v$.email.$errors" v-model="email" label="Email" placeholder="Enter your email" type="email" />
-        <FormInput v-model="password" type="password" placeholder="Enter your Password" label="Password"
-          :errors="v$.password.$errors" />
+        <FormInput v-model="password" :type="passwordFieldType" placeholder="Enter your Password" label="Password"
+          :errors="v$.password.$errors">
+
+          <div class="absolute right-4 top-4 cursor-pointer flex items-center justify-center" @click="passwordVisibility">
+            <IconPasswordShow v-if="showPassword" />
+            <IconPasswordClose v-else />
+          </div>
+        </FormInput>
       </div>
       <div class="flex justify-end py-7 gap-x-4">
         <button @click="$emit('cancel')" class="bg-gray-400 rounded-md p-2 text-white font-bold w-[90px]">
@@ -30,11 +36,15 @@ import FormInput from "@/components/FormInput.vue"
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import { useHolidayStore } from '@/stores/holiday'
+import IconPasswordShow from '../components/icons/IconPasswordShow.vue'
+import IconPasswordClose from '../components/icons/IconPasswordClose.vue'
 
 export default {
   name: "CreateEmployee",
   components: {
-    FormInput
+    FormInput,
+    IconPasswordShow,
+    IconPasswordClose
   },
   emits: ["fetchEmployeesList", 'cancel'],
   setup() {
@@ -47,6 +57,8 @@ export default {
     return {
       email: "",
       password: "",
+      showPassword: false,
+      passwordFieldType: 'password',
       vuelidateExternalResults: {
         email: '',
         password: ''
@@ -73,6 +85,10 @@ export default {
         }
         this.$emit("fetchEmployeesList")
       }
+    },
+    passwordVisibility() {
+      this.showPassword = !this.showPassword
+      this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password'
     }
   },
   watch: {
